@@ -1,0 +1,20 @@
+# SOC Incident Response Playbooks
+## Tier 1 SOC Analyst — Standard Operating Procedures
+
+---
+
+### About These Playbooks
+
+These playbooks define the standard response procedures
+for the three most common security incidents handled
+by a Tier 1 SOC analyst. Each playbook follows the
+NIST SP 800-61 incident response framework:
+
+1. Preparation
+2. Detection & Analysis
+3. Containment
+4. Eradication
+5. Recovery
+6. Lessons Learned
+
+---

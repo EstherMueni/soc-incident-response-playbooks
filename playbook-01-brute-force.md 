@@ -1,0 +1,141 @@
+# Playbook 01 — Brute Force Attack Response
+
+**Severity:** HIGH
+**Analyst Level:** Tier 1
+**Framework:** NIST SP 800-61
+**Last Updated:** May 2026
+
+---
+
+## What Is A Brute Force Attack
+
+A brute force attack is when an attacker repeatedly
+tries different username and password combinations
+to gain unauthorised access to a system. It is
+automated and can generate hundreds of attempts
+per minute.
+
+---
+
+## Trigger
+
+SIEM alert fires when a single source IP generates
+more than 10 failed login attempts within 5 minutes.
+
+---
+
+## Step 1 — Acknowledge The Alert
+
+- Log into the SIEM
+- Open the alert
+- Create a ticket in the ticketing system
+- Record the alert ID and timestamp
+
+---
+
+## Step 2 — Gather Information
+
+Before taking any action answer these questions:
+
+| Question | Where To Find It |
+|---|---|
+| What is the source IP? | SIEM alert |
+| What is the target system? | SIEM alert |
+| What service is being attacked? | Port number in logs |
+| How many attempts were made? | SIEM event count |
+| What usernames were tried? | Authentication logs |
+| Did any attempt succeed? | Search for Accepted password |
+
+---
+
+## Step 3 — Is It A True Positive?
+
+Ask yourself:
+
+| Question | If YES |
+|---|---|
+| Is this IP an internal scanner? | Investigate before acting |
+| Is this scheduled maintenance? | Verify and close |
+| Is the IP whitelisted? | Verify and close |
+| Is the speed consistent with automation? | True positive |
+
+If all checks point to a real attack — continue to Step 4.
+
+---
+
+## Step 4 — Enrich The Source IP
+
+Check the source IP in these tools:
+
+| Tool | What To Check |
+|---|---|
+| VirusTotal | Malicious reports |
+| AbuseIPDB | Abuse history |
+| Shodan | Open ports |
+| WHOIS | Owner and location |
+
+Document your findings for each tool in the ticket.
+
+---
+
+## Step 5 — Containment
+
+| Scenario | Action |
+|---|---|
+| Attack still ongoing | Block source IP at firewall |
+| Attack stopped, no breach | Add to blocklist, monitor |
+| Successful login detected | ESCALATE TO TIER 2 NOW |
+| Source IP is internal | Do NOT block, investigate |
+
+---
+
+## Step 6 — Escalate or Close
+
+**Escalate to Tier 2 if:**
+- Any successful login detected
+- Critical system targeted
+- Over 1000 attempts made
+- Part of a coordinated campaign
+
+**Close at Tier 1 if:**
+- No successful login
+- IP blocked successfully
+- Attack has stopped
+- No further malicious activity
+
+---
+
+## Step 7 — Document The Incident
+
+Record all of this in your ticket before closing:
+
+Alert ID:
+Date and Time:
+Source IP:
+Target System:
+Attack Type:        Brute Force
+Total Attempts:
+Successful Logins:
+Threat Intel Findings:
+Containment Action:
+Escalated:          Yes / No
+Analyst:
+Time To Resolve:
+---
+
+## Step 8 — Recommendations
+
+1. Disable password authentication — use SSH keys
+2. Install fail2ban to auto-block after 3 failed attempts
+3. Change SSH from default port 22
+4. Configure SIEM alert threshold at 10 attempts
+
+---
+
+## MITRE ATT&CK Reference
+
+| Technique | ID |
+|---|---|
+| Brute Force | T1110 |
+| Password Spraying | T1110.003 |
+| Valid Accounts | T1078 |
